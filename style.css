@@ -1,78 +1,288 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background-image: url('images/sunny.jpg');
-    height: 100vh;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-position: top center;
-    font-family: Arial, Helvetica, sans-serif;
-    background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color:#abc4ff ;
+  font-family: Arial, sans-serif;
 }
 
-.app-main {
-    width: 50vh;
-    margin: 100px auto;
-    background-color: rgba(240,248,255, 0.6);
-    padding: 20px;
-    text-align: center;
+.container {
+  max-width: 600px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-.app-main > * {
-    margin-bottom: 20px;
+.title {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
 }
 
-.input-box {
-    width: 100%;
-    background-color: rgba(255,255,255,0.6);
-    border: none;
-    outline: none;
-    color: #582233;
-    font-size: 1.2rem;
-    height: 50px;
-    border-radius: 5px;
-    padding: 0 10px;
-    text-align: center;
+#quiz {
+  margin-bottom: 20px;
 }
 
-.input-box:focus {
-    background-color: rgba(255,255,255);
+#question {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#options label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#next-button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #abc4ff;
+  color: #fff;
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.3s;
+  animation: pulse 0s infinite;
+}
+
+#next-button:hover {
+  background-color: #809bce;
+  transform: scale(1.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  animation: none;
+}
+
+#next-button:active {
+  transform: scale(0.9);
 }
 
 
-.weather-body {
-    display: none;
-    color: #582233;
-    padding: 20px;
-    line-height: 2rem;
-    border-radius: 10px;
-    background-color: rgba(255,255,255,0.6);
-    height: 50vh;
+#feedback {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
 }
 
-.location-details {
-    font-weight: bold;
+#score {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.weather-status {
-    padding: 20px;
+/* Additional Styling and Creativity */
+
+.container {
+  position: relative;
 }
 
-.temp {
-    font-size: 50pt;
-    font-weight: 700;
-    margin: 20px 0;
-    text-shadow: 2px 4px rgba(0,0,0,0.3);
+.container:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+  background-image: linear-gradient(to bottom right, #e2f4fe, #f5eef7);
+  border-radius: 10px;
 }
 
-.min-max, .weather {
-    font-size: 12pt;
-    font-weight: 600;
+.title {
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+#quiz {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#question {
+  color: #555;
+}
+
+.options label {
+  position: relative;
+  padding-left: 30px;
+  list-style-type: none;
+}
+
+.options label::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.options input[type="radio"]:checked + span::before {
+  background-color: #809bce;
+}
+
+.options label span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.feedback.correct {
+  color: #809bce;
+}
+
+.feedback.wrong {
+  color: #FF5722;
+}
+
+.correct-answer {
+  background-color: #809bce;
+  color: #fff;
+}
+
+.score-container {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.score-container:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+  background-image: linear-gradient(to bottom right, #eef8fd, #f9f0f7);
+  border-radius: 5px;
+}
+
+/* Additional Styling and Creativity */
+
+.options {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.options label {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.options label::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  transition: background-color 0.3s ease;
+}
+
+.options input[type="radio"]:checked + span::before {
+  background-color: #FF5722;
+}
+
+.feedback {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+  animation: fade-in 1s ease;
+}
+
+.next-button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #FF5722;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  animation: fade-in 1s ease;
+}
+
+.next-button:hover {
+  background-color: #E64A19;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: shake 0.5s ease-in-out;
+}
+
+.correct-answer {
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.congratulations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: bounce-in 1s ease;
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 
 
 
