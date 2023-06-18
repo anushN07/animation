@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Weather App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz Application</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-main">
-        <div class="searchInputBox">
-            <input type="text" id="input-box" class="input-box" placeholder="Enter city name..." autocomplete="off">
-        </div>
-
-        <div class="weather-body">
-            <div class="location-details">
-                <div class="city" id="city">Amravati, IN</div>
-                <div class="date" id="date">10 June (Wednesday), 2020</div>
-            </div>
-
-            <div class="weather-status">
-                <div class="temp" id="temp">34&deg;C</div>
-                <div class="min-max" id="min-max">32&deg;C (min) / 34&deg;C (max)</div>
-                <div class="weather" id="weather">Clear</div>
-                <div id="img"></div>
-            </div>
-        </div>
+  <div class="container">
+    <h1 class="title">Quiz Application</h1>
+    <div id="quiz">
+      <div id="question"></div>
+      <div id="options"></div>
+      <button id="next-button">Next</button>
+      <div id="feedback"></div>
+      <div id="score"></div>
     </div>
+  </div>
 
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
+
+
