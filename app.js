@@ -1,90 +1,136 @@
-//https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
-const weatherApi = {
-    key: "685ff79531b10323f7e18ac54bc94252",
-    baseUrl: "https://api.openweathermap.org/data/2.5/weather", 
+const quizData = [
+  {
+    question: "What is the capital of France?",
+    options: ["Paris", "London", "Berlin", "Rome"],
+    answer: "Paris"
+  },
+  {
+    question: "Which country is known as the 'Land of the Rising Sun'?",
+    options: ["China", "Japan", "South Korea", "Thailand"],
+    answer: "Japan"
+  },
+  {
+    question: "What is the largest planet in our solar system?",
+    options: ["Jupiter", "Saturn", "Neptune", "Mars"],
+    answer: "Jupiter"
+  },
+  {
+    question: "Who painted the Mona Lisa?",
+    options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh", "Michelangelo"],
+    answer: "Leonardo da Vinci"
+  },
+  {
+    question: "Which country is famous for its tulip fields?",
+    options: ["Netherlands", "Italy", "France", "Germany"],
+    answer: "Netherlands"
+  },
+  {
+    question: "Which planet is known as the 'Red Planet'?",
+    options: ["Jupiter", "Saturn", "Mars", "Neptune"],
+    answer: "Mars"
+  },
+  {
+    question: "What is the chemical symbol for gold?",
+    options: ["Au", "Ag", "Fe", "Cu"],
+    answer: "Au"
+  },
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const feedbackElement = document.getElementById("feedback");
+const scoreElement = document.getElementById("score");
+const nextButton = document.getElementById("next-button");
+
+function loadQuestion() {
+  const currentQuizData = quizData[currentQuestion];
+  questionElement.textContent = currentQuizData.question;
+
+  optionsElement.innerHTML = "";
+  currentQuizData.options.forEach((option) => {
+    const optionElement = document.createElement("label");
+    optionElement.innerHTML = `
+      <input type="radio" name="answer" value="${option}">
+      ${option}
+    `;
+    optionsElement.appendChild(optionElement);
+  });
+
+  feedbackElement.textContent = ""; // Clear previous feedback
 }
 
-const searchInputBox = document.getElementById('input-box');
 
-// Event Listener Function on keypress
-searchInputBox.addEventListener('keypress', (event) => {
-    
-    if(event.keyCode == 13) {
-        console.log(searchInputBox.value);
-        getWeatherReport(searchInputBox.value);
-        document.querySelector('.weather-body').style.display = "block";
+function checkAnswer() {
+  const selectedOption = document.querySelector('input[name="answer"]:checked');
+  if (selectedOption) {
+    const userAnswer = selectedOption.value;
+    const currentQuizData = quizData[currentQuestion];
+    const correctAnswer = currentQuizData.answer;
+
+    if (userAnswer === correctAnswer) {
+      feedbackElement.textContent = "Correct!";
+      feedbackElement.classList.remove("wrong");
+      feedbackElement.classList.add("correct");
+      score++;
+    } else {
+      feedbackElement.textContent = `Wrong! The correct answer is ${correctAnswer}`;
+      feedbackElement.classList.remove("correct");
+      feedbackElement.classList.add("wrong");
     }
 
+    optionsElement.querySelectorAll("input").forEach((input) => {
+      if (input.value === correctAnswer) {
+        const label = input.parentElement;
+        label.classList.add("correct-answer");
+      }
+      input.disabled = true;
+    });
+
+    nextButton.textContent = "Next";
+    nextButton.disabled = false;
+
+    currentQuestion++;
+    if (currentQuestion < quizData.length) {
+      setTimeout(() => {
+        loadQuestion();
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        showScore();
+      }, 1500);
+    }
+  }
+}
+
+function showScore() {
+  questionElement.style.display = "none";
+  optionsElement.style.display = "none";
+  nextButton.style.display = "none";
+  scoreElement.textContent = `Your Score: ${score}/${quizData.length}`;
+}
+
+nextButton.addEventListener("click", checkAnswer);
+
+loadQuestion();
+
+
+function showScore() {
+  questionElement.style.display = "none";
+  optionsElement.style.display = "none";
+  nextButton.style.display = "none";
+  scoreElement.textContent = `Your Score: ${score}/${quizData.length}`;
+}
+
+nextButton.addEventListener("click", () => {
+  if (nextButton.textContent === "Next") {
+    showNextQuestion();
+  } else {
+    checkAnswer();
+  }
 });
 
-// Get Weather Report
-function getWeatherReport(city) {
-    fetch(`${weatherApi.baseUrl}?q=${city}&appid=${weatherApi.key}&units=metric`)
-    .then(weather => {
-        return weather.json();
-    }).then(showWeatherReport);
-}
-
-// Show Weather Report
-function showWeatherReport(weather){
-    console.log(weather);
-
-    let city = document.getElementById('city');
-    city.innerText = `${weather.name}, ${weather.sys.country}`;
-
-    let temperature = document.getElementById('temp');
-    temperature.innerHTML = `${Math.round(weather.main.temp)}&deg;C`;
-
-    let minMaxTemp = document.getElementById('min-max');
-    minMaxTemp.innerHTML = `${Math.floor(weather.main.temp_min)}&deg;C (min)/ ${Math.ceil(weather.main.temp_max)}&deg;C (max) `;
-
-    let weatherType = document.getElementById('weather');
-    weatherType.innerText = `${weather.weather[0].main}`;
-
-    let date = document.getElementById('date');
-    let todayDate = new Date();
-    date.innerText = dateManage(todayDate);
-
-    
-    if(weatherType.textContent == 'Clear') {
-        document.body.style.backgroundImage = "url('images/clear.jpg')";
-        
-    } else if(weatherType.textContent == 'Clouds') {
-
-        document.body.style.backgroundImage = "url('images/cloud.jpg')";
-        
-    } else if(weatherType.textContent == 'Haze') {
-
-        document.body.style.backgroundImage = "url('images/cloud.jpg')";
-        
-    }     else if(weatherType.textContent == 'Rain') {
-        
-        document.body.style.backgroundImage = "url('images/rain.jpg')";
-        
-    } else if(weatherType.textContent == 'Snow') {
-        
-        document.body.style.backgroundImage = "url('images/snow.jpg')";
-    
-    } else if(weatherType.textContent == 'Thunderstorm') {
-    
-        document.body.style.backgroundImage = "url('images/thunderstorm.jpg')";
-        
-    } 
-}
-
-// Date manage
-function dateManage(dateArg) {
-
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    let year = dateArg.getFullYear();
-    let month = months[dateArg.getMonth()];
-    let date = dateArg.getDate();
-    let day = days[dateArg.getDay()];
-
-    return `${date} ${month} (${day}), ${year}`;
-}
-
+loadQuestion();
